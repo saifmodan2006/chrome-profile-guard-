@@ -1,0 +1,59 @@
+/* Settings page. */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.topbar-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 26px; height: 26px; }
+.brand-name { font-size: 14.5px; font-weight: 500; }
+.topbar-actions { display: flex; align-items: center; gap: 14px; }
+
+.info-list { margin: 6px 0 0; padding-left: 18px; }
+.info-list li { font-size: 12.5px; color: var(--text-2); line-height: 1.6; margin-bottom: 8px; }
+
+.scope-choices { display: grid; gap: 10px; }
+
+kbd {
+  font-family: 'Roboto Mono', ui-monospace, monospace;
+  font-size: 11px;
+  background: #F1F3F4;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #202124;
+  color: #fff;
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 520px) {
+  .row { flex-direction: column; align-items: flex-start; }
+  .row-control { width: 100%; }
+  .topbar-actions .btn { padding: 0 12px; }
+}

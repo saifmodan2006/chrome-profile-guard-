@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browser locked — Chrome Profile Guard</title>
+  <link rel="stylesheet" href="../../shared/ui.css" />
+  <link rel="stylesheet" href="lock.css" />
+</head>
+<body>
+  <div class="lock-page">
+    <div class="lock-card card center" role="dialog" aria-modal="true" aria-label="Browser locked">
+      <svg class="mark mark-muted" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin:0 auto 18px;">
+        <rect x="4.5" y="10.5" width="15" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+
+      <h1 class="title" id="title">Browser locked</h1>
+      <p class="subtitle" id="subtitle">This browsing workspace is protected.</p>
+
+      <form id="form" novalidate style="margin-top:22px;">
+        <div class="field">
+          <label for="secret" id="secret-label">Enter PIN</label>
+          <div class="input-wrap">
+            <input id="secret" type="password" autocomplete="off" />
+            <button type="button" class="reveal" id="reveal" aria-label="Show">Show</button>
+          </div>
+        </div>
+        <div class="error-text" id="error" role="alert" aria-live="assertive"></div>
+        <button type="submit" class="btn btn-primary btn-block" id="unlock">Unlock</button>
+      </form>
+
+      <button class="btn btn-ghost" id="forgot" style="margin-top:16px; font-size:12.5px;">Forgot your PIN?</button>
+    </div>
+
+    <p class="muted center" style="margin-top:18px; max-width:360px;">
+      Chrome Profile Guard protects your browsing workspace on this device.
+    </p>
+  </div>
+
+  <script type="module" src="lock.js"></script>
+</body>
+</html>

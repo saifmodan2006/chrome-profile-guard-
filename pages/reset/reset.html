@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reset protection — Chrome Profile Guard</title>
+  <link rel="stylesheet" href="../../shared/ui.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="container">
+      <section class="card" id="confirm-view">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin:0 auto 16px; color:var(--error); display:block;">
+          <path d="M12 4.5l8 14H4l8-14z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M12 10v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          <circle cx="12" cy="16.5" r="0.6" fill="currentColor"/>
+        </svg>
+        <h1 class="title center">Reset protection?</h1>
+        <p class="subtitle center">
+          Resetting protection will remove your current authentication settings. For your
+          security, Chrome Profile Guard cannot recover a forgotten PIN or password — resetting
+          is the only way to regain access.
+        </p>
+
+        <div class="notice warn" style="margin-top:20px;">
+          <div>
+            This will permanently:
+            <ul style="margin:8px 0 0; padding-left:18px;">
+              <li>delete your PIN or password</li>
+              <li>remove your protected-website list</li>
+              <li>clear your settings and local activity log</li>
+            </ul>
+            You'll need to complete setup again.
+          </div>
+        </div>
+
+        <label style="display:flex; gap:10px; align-items:flex-start; margin:20px 0; font-size:13px; color:var(--text);">
+          <input type="checkbox" id="ack" style="width:auto; height:auto; margin-top:2px;" />
+          <span>I understand this removes my credential and protection settings.</span>
+        </label>
+
+        <div class="btn-row">
+          <button class="btn btn-secondary" id="cancel">Cancel</button>
+          <button class="btn btn-danger" id="reset" disabled>Reset protection</button>
+        </div>
+      </section>
+
+      <section class="card center hidden" id="done-view">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin:0 auto 16px; color:var(--success);">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1 class="title">Protection reset</h1>
+        <p class="subtitle">Your authentication settings have been removed. Set up protection again whenever you're ready.</p>
+        <div class="spacer-lg"></div>
+        <button class="btn btn-primary" id="setup-again">Set up protection</button>
+      </section>
+    </div>
+  </div>
+
+  <script type="module" src="reset.js"></script>
+</body>
+</html>

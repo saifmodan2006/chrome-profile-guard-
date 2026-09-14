@@ -1,0 +1,19 @@
+/*
+ * Chrome Profile Guard — content guard styles.
+ *
+ * Deliberately tiny. The lock overlay itself lives inside a Shadow DOM so page
+ * styles cannot bleed into it and vice-versa. These two rules only take effect
+ * when the guard sets data-cpg-guarded on <html>, and they hide the underlying
+ * page (Privacy Mode) and stop background scrolling while locked.
+ *
+ * The overlay host is appended to <html> (not <body>), so it stays visible
+ * while the body is hidden.
+ */
+
+html[data-cpg-guarded="true"] > body {
+  visibility: hidden !important;
+}
+
+html[data-cpg-guarded="true"] {
+  overflow: hidden !important;
+}

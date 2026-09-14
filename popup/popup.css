@@ -1,0 +1,24 @@
+/* Popup — compact 300px panel. */
+
+.popup {
+  width: 300px;
+  background: var(--surface);
+}
+
+.pop-head {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.pop-head .brand-mark { width: 22px; height: 22px; }
+.pop-head .brand-name { font-size: 13.5px; font-weight: 500; }
+.pop-head .brand { gap: 8px; display: flex; align-items: center; }
+
+.pop-body { padding: 16px; }
+
+.pop-status { margin-bottom: 10px; }
+.pop-line { font-size: 14px; color: var(--text); font-weight: 500; }
+.pop-sub { font-size: 12.5px; color: var(--text-2); line-height: 1.5; margin-top: 4px; }
+
+.pop-body .error-text { min-height: 0; }

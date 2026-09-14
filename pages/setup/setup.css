@@ -1,0 +1,62 @@
+/* Setup page — brand header + step indicator. */
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.brand-mark { width: 32px; height: 32px; }
+.brand-name { font-size: 15px; font-weight: 500; color: var(--text); }
+
+.stepper {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  justify-content: center;
+  counter-reset: step;
+}
+.stepper li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+.stepper li::before {
+  counter-increment: step;
+  content: counter(step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  font-size: 11px;
+  color: var(--text-2);
+}
+.stepper li:not(:last-child)::after {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--border);
+}
+.stepper li.active::before {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+.stepper li.done::before {
+  background: var(--blue-weak);
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.stepper li.active { color: var(--text); font-weight: 500; }
+
+@media (max-width: 380px) {
+  .stepper li span { display: none; }
+}

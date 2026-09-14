@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chrome Profile Guard — Settings</title>
+  <link rel="stylesheet" href="../../shared/ui.css" />
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="4" y="7" width="40" height="34" rx="8" fill="#1A73E8" />
+          <rect x="10" y="13" width="28" height="22" rx="3" fill="#FFFFFF" />
+          <rect x="10" y="13" width="28" height="6" rx="3" fill="#E8F0FE" />
+          <rect x="20" y="24" width="8" height="7" rx="1.4" fill="#1A73E8" />
+          <path d="M21.5 24v-1.6a2.5 2.5 0 0 1 5 0V24" stroke="#1A73E8" stroke-width="1.4" fill="none" stroke-linecap="round" />
+        </svg>
+        <span class="brand-name">Chrome Profile Guard</span>
+      </div>
+      <div class="topbar-actions">
+        <span class="pill" id="status-pill"><span class="dot dot-green"></span><span id="status-text">Unlocked</span></span>
+        <button class="btn btn-secondary" id="lock-now">Lock now</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" style="align-items:flex-start;">
+    <div class="container container-wide">
+
+      <!-- locked gate -->
+      <section class="card center hidden" id="gate" style="margin-top:20px;">
+        <svg class="mark mark-muted" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin:0 auto 12px;">
+          <rect x="4.5" y="10.5" width="15" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <h1 class="title">Settings are locked</h1>
+        <p class="subtitle">Unlock the workspace to view and change your protection settings.</p>
+        <div class="spacer-lg"></div>
+        <button class="btn btn-primary" id="gate-unlock">Unlock to continue</button>
+      </section>
+
+      <!-- main content -->
+      <div id="content" class="hidden">
+
+        <!-- SECURITY -->
+        <section class="section" style="margin-top:20px;">
+          <div class="section-head"><h2 class="title-sm">Security</h2></div>
+          <div class="section-body">
+            <div class="row">
+              <div class="row-main">
+                <div class="row-title">Protection method</div>
+                <div class="row-desc" id="method-desc">PIN</div>
+              </div>
+              <div class="row-control">
+                <button class="btn btn-secondary" id="change-cred">Change credential</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="row-main">
+                <div class="row-title">Auto-lock after inactivity</div>
+                <div class="row-desc">Automatically lock the workspace when you're away.</div>
+              </div>
+              <div class="row-control">
+                <select id="autolock" style="width:150px;"></select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="row-main">
+                <div class="row-title">Lock on browser restart</div>
+                <div class="row-desc">Always on. The workspace starts locked after every Chrome restart.</div>
+              </div>
+              <div class="row-control"><span class="pill"><span class="dot dot-green"></span>On</span></div>
+            </div>
+
+            <div class="row">
+              <div class="row-main">
+                <div class="row-title">Quick Lock shortcut</div>
+                <div class="row-desc">Lock instantly with <kbd id="shortcut">Ctrl+Shift+L</kbd>. Configure in Chrome shortcuts.</div>
+              </div>
+              <div class="row-control" style="display:flex; gap:10px; align-items:center;">
+                <button class="btn btn-ghost" id="edit-shortcut">Change</button>
+                <label class="switch"><input type="checkbox" id="quicklock" /><span class="slider"></span></label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PROTECTED WEBSITES -->
+        <section class="section">
+          <div class="section-head"><h2 class="title-sm">Protected websites</h2></div>
+          <div class="section-body">
+            <div class="row">
+              <div class="row-main">
+                <div class="row-title">Protection scope</div>
+                <div class="row-desc">Choose whether every site or only selected sites require unlock.</div>
+              </div>
+            </div>
+            <div class="scope-choices" style="padding-bottom:14px;">
+              <label class="choice" style="cursor:pointer;">
+                <input type="radio" name="mode" value="everything" style="width:auto;height:auto;margin-top:3px;" />
+                <span>
+                  <span class="choice-title">Protect everything</span>
+                  <span class="choice-desc">All normal browsing requires unlock.</span>
+                </span>
+              </label>
+              <label class="choice" style="cursor:pointer;">
+                <input type="radio" name="mode" value="selected" style="width:auto;height:auto;margin-top:3px;" />
+                <span>
+                  <span class="choice-title">Protect selected websites</span>
+                  <span class="choice-desc">Only the domains you add below are protected.</span>
+                </span>
+              </label>
+            </div>
+
+            <div id="domains-block" class="hidden" style="padding-bottom:16px;">
+              <div class="divider"></div>
+              <label for="domain-input" style="font-size:12.5px;color:var(--text-2);">Add a website</label>
+              <div style="display:flex; gap:8px; margin-top:6px;">
+                <input type="text" id="domain-input" placeholder="e.g. mail.google.com" style="flex:1;" />
+                <button class="btn btn-secondary" id="domain-add">Add</button>
+              </div>
+              <div class="error-text" id="domain-error"></div>
+              <ul class="domain-list" id="domain-list"></ul>
+              <button class="btn btn-ghost" id="add-suggested" style="font-size:12.5px;">Add suggested sensitive sites</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- PRIVACY -->
+        <section class="section">
+          <div class="section-head"><h2 class="title-sm">Privacy</h2></div>
+          <div class="section-body">
+            <div class="row">
+              <div class="row-main">
+                <div class="row-title">Hide page content when locked</div>
+                <div class="row-desc">Cover protected pages completely while locked (Privacy Mode).</div>
+              </div>
+              <div class="row-control"><label class="switch"><input type="checkbox" id="hide-content" /><span class="slider"></span></label></div>
+            </div>
+            <div class="row">
+              <div class="row-main">
+                <div class="row-title">Local activity log</div>
+                <div class="row-desc">Record lock/unlock events on this device only. No URLs, no content. <span id="events-count"></span></div>
+              </div>
+              <div class="row-control" style="display:flex; gap:10px; align-items:center;">
+                <button class="btn btn-ghost" id="clear-events">Clear</button>
+                <label class="switch"><input type="checkbox" id="logging" /><span class="slider"></span></label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="row-main">
+                <div class="row-title">Allow in Incognito</div>
+                <div class="row-desc">Protection in Incognito requires enabling this extension in Incognito from Chrome.</div>
+              </div>
+              <div class="row-control"><label class="switch"><input type="checkbox" id="incognito" /><span class="slider"></span></label></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECURITY INFORMATION -->
+        <section class="section">
+          <div class="section-head"><h2 class="title-sm">Security information</h2></div>
+          <div class="section-body" style="padding-bottom:16px;">
+            <ul class="info-list">
+              <li>Chrome Profile Guard does not send your password or PIN to any server.</li>
+              <li>Your authentication data is stored locally and only as a salted, derived key — never as plaintext.</li>
+              <li>Chrome extensions cannot control Chrome's native profile picker or sign-in. This is a browsing-workspace lock.</li>
+              <li>A user who can disable or uninstall the extension can bypass it. For device-level security, use your operating system lock.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- DANGER ZONE -->
+        <section class="section" style="border-color:#FBD9D0;">
+          <div class="section-head" style="border-color:#FBD9D0;"><h2 class="title-sm" style="color:var(--error);">Reset</h2></div>
+          <div class="section-body">
+            <div class="row" style="border:none;">
+              <div class="row-main">
+                <div class="row-title">Reset protection</div>
+                <div class="row-desc">Remove your credential and all settings. Use this if you've forgotten your credential.</div>
+              </div>
+              <div class="row-control"><button class="btn btn-danger-outline" id="reset">Reset protection</button></div>
+            </div>
+          </div>
+        </section>
+
+        <p class="muted center" style="margin:8px 0 40px;">Chrome Profile Guard · v1.0.0 · Local-only, no accounts.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- change credential dialog -->
+  <div class="dialog-backdrop" id="cred-dialog">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="cred-title">
+      <h2 class="title-sm" id="cred-title">Change credential</h2>
+      <p class="muted" style="margin-bottom:16px;">Confirm your current credential, then set a new one.</p>
+      <form id="cred-form" novalidate>
+        <div class="field">
+          <label for="cur">Current credential</label>
+          <div class="input-wrap">
+            <input id="cur" type="password" autocomplete="off" />
+            <button type="button" class="reveal" data-target="cur" aria-label="Show">Show</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="new-method">New method</label>
+          <select id="new-method">
+            <option value="pin">PIN</option>
+            <option value="password">Password</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="new-secret" id="new-secret-label">New PIN</label>
+          <div class="input-wrap">
+            <input id="new-secret" type="password" autocomplete="new-password" />
+            <button type="button" class="reveal" data-target="new-secret" aria-label="Show">Show</button>
+          </div>
+          <p class="hint" id="new-hint"></p>
+        </div>
+        <div class="field">
+          <label for="new-confirm" id="new-confirm-label">Confirm new PIN</label>
+          <div class="input-wrap">
+            <input id="new-confirm" type="password" autocomplete="new-password" />
+            <button type="button" class="reveal" data-target="new-confirm" aria-label="Show">Show</button>
+          </div>
+        </div>
+        <div class="error-text" id="cred-error" role="alert" aria-live="assertive"></div>
+        <div class="btn-row" style="margin-top:8px;">
+          <button type="button" class="btn btn-ghost" id="cred-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="cred-save">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="settings.js"></script>
+</body>
+</html>

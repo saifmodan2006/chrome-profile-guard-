@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Set up Chrome Profile Guard</title>
+  <link rel="stylesheet" href="../../shared/ui.css" />
+  <link rel="stylesheet" href="setup.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="container">
+
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="4" y="7" width="40" height="34" rx="8" fill="#1A73E8" />
+          <rect x="10" y="13" width="28" height="22" rx="3" fill="#FFFFFF" />
+          <rect x="10" y="13" width="28" height="6" rx="3" fill="#E8F0FE" />
+          <circle cx="14" cy="16" r="1.1" fill="#1A73E8" />
+          <circle cx="17.5" cy="16" r="1.1" fill="#1A73E8" />
+          <rect x="20" y="24" width="8" height="7" rx="1.4" fill="#1A73E8" />
+          <path d="M21.5 24v-1.6a2.5 2.5 0 0 1 5 0V24" stroke="#1A73E8" stroke-width="1.4" fill="none" stroke-linecap="round" />
+        </svg>
+        <span class="brand-name">Chrome Profile Guard</span>
+      </div>
+
+      <!-- step indicator -->
+      <ol class="stepper" id="stepper" aria-label="Setup progress">
+        <li data-step="welcome">Welcome</li>
+        <li data-step="method">Method</li>
+        <li data-step="create">Credential</li>
+      </ol>
+
+      <!-- STEP 1 — welcome -->
+      <section class="card center step" id="step-welcome">
+        <h1 class="title">Protect your browsing space</h1>
+        <p class="subtitle">Keep your private browsing workspace locked when you're away.</p>
+        <div class="spacer-lg"></div>
+        <button class="btn btn-primary btn-block" id="btn-start">Set up protection</button>
+        <p class="muted" style="margin-top:16px;">Your credentials are stored securely on this device.</p>
+      </section>
+
+      <!-- STEP 2 — choose method -->
+      <section class="card step hidden" id="step-method">
+        <h1 class="title center">Choose protection</h1>
+        <p class="subtitle center" style="margin-bottom:22px;">Pick how you'd like to unlock this workspace.</p>
+
+        <div class="choices">
+          <button class="choice" id="choose-pin" aria-pressed="false" data-method="pin">
+            <svg class="choice-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3.5" y="8.5" width="17" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M7 12h.01M12 12h.01M17 12h.01M7 16h.01M12 16h.01M17 16h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <span>
+              <span class="choice-title">PIN</span>
+              <span class="choice-desc">Fast to enter. Recommended for everyday use.</span>
+            </span>
+          </button>
+
+          <button class="choice" id="choose-password" aria-pressed="false" data-method="password">
+            <svg class="choice-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="4.5" y="10.5" width="15" height="9.5" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <span>
+              <span class="choice-title">Password</span>
+              <span class="choice-desc">Stronger protection. Recommended for shared computers.</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="btn-row" style="margin-top:24px;">
+          <button class="btn btn-ghost" id="back-method">Back</button>
+          <button class="btn btn-primary" id="next-method" disabled>Continue</button>
+        </div>
+      </section>
+
+      <!-- STEP 3 — create credential -->
+      <section class="card step hidden" id="step-create">
+        <h1 class="title center" id="create-title">Create your PIN</h1>
+        <p class="subtitle center" id="create-sub" style="margin-bottom:22px;">Choose something you'll remember but others can't guess.</p>
+
+        <form id="create-form" novalidate>
+          <div class="field">
+            <label for="secret" id="label-secret">Enter PIN</label>
+            <div class="input-wrap">
+              <input id="secret" type="password" autocomplete="new-password" />
+              <button type="button" class="reveal" id="reveal-1" aria-label="Show">Show</button>
+            </div>
+            <div class="strength hidden" id="strength">
+              <div class="strength-track">
+                <span class="strength-seg" data-i="1"></span>
+                <span class="strength-seg" data-i="2"></span>
+                <span class="strength-seg" data-i="3"></span>
+                <span class="strength-seg" data-i="4"></span>
+              </div>
+              <div class="strength-label" id="strength-label"></div>
+            </div>
+            <p class="hint" id="secret-hint"></p>
+          </div>
+
+          <div class="field">
+            <label for="confirm" id="label-confirm">Confirm PIN</label>
+            <div class="input-wrap">
+              <input id="confirm" type="password" autocomplete="new-password" />
+              <button type="button" class="reveal" id="reveal-2" aria-label="Show">Show</button>
+            </div>
+          </div>
+
+          <div class="error-text" id="create-error" role="alert" aria-live="assertive"></div>
+
+          <div class="divider"></div>
+
+          <div class="field">
+            <label for="autolock">Auto-lock after inactivity</label>
+            <select id="autolock"></select>
+          </div>
+
+          <div class="field">
+            <label>What to protect</label>
+            <div class="choices">
+              <label class="choice" style="cursor:pointer;">
+                <input type="radio" name="scope" value="everything" checked style="width:auto;height:auto;margin-top:3px;" />
+                <span>
+                  <span class="choice-title">Everything</span>
+                  <span class="choice-desc">All websites require unlock. Best all-round protection.</span>
+                </span>
+              </label>
+              <label class="choice" style="cursor:pointer;">
+                <input type="radio" name="scope" value="selected" style="width:auto;height:auto;margin-top:3px;" />
+                <span>
+                  <span class="choice-title">Selected websites</span>
+                  <span class="choice-desc">Only sites you choose are protected. Add them in Settings.</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="btn-row" style="margin-top:8px;">
+            <button type="button" class="btn btn-ghost" id="back-create">Back</button>
+            <button type="submit" class="btn btn-primary" id="finish">Finish setup</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- DONE -->
+      <section class="card center step hidden" id="step-done">
+        <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin:0 auto 16px; color:var(--success);">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1 class="title">You're protected</h1>
+        <p class="subtitle">Chrome Profile Guard is ready. You can lock now, or fine-tune protection in Settings.</p>
+        <div class="spacer-lg"></div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" id="open-settings">Open Settings</button>
+          <button class="btn btn-primary" id="lock-now">Lock now</button>
+        </div>
+      </section>
+
+      <p class="muted center" style="margin-top:20px;">
+        Chrome Profile Guard locks your browsing workspace. It cannot change Chrome's own
+        profile picker or sign-in. <a href="#" id="learn-limits">Learn more</a>
+      </p>
+
+    </div>
+  </div>
+
+  <script type="module" src="setup.js"></script>
+</body>
+</html>

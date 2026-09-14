@@ -1,0 +1,18 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chrome Profile Guard">
+  <!-- Source art for the extension icons. Re-export PNGs with:
+       node scripts/generate-icons.mjs
+       (the generator is the source of truth for the shipped PNGs;
+        this SVG mirrors its geometry for design reference.) -->
+  <!-- blue tile -->
+  <rect x="2.56" y="7.68" width="122.88" height="112.64" rx="25.6" fill="#1A73E8"/>
+  <!-- browser window -->
+  <rect x="28.16" y="35.84" width="71.68" height="56.32" rx="7.68" fill="#FFFFFF"/>
+  <!-- toolbar strip -->
+  <rect x="30.72" y="38.4" width="66.56" height="10.24" rx="2.56" fill="#E8F0FE"/>
+  <!-- lock shackle -->
+  <path d="M55.68 64 a8.32 8.32 0 0 1 16.64 0" fill="none" stroke="#1A73E8" stroke-width="3.2" stroke-linecap="round"/>
+  <!-- lock body -->
+  <rect x="51.2" y="64" width="25.6" height="20.48" rx="3.2" fill="#1A73E8"/>
+  <!-- keyhole -->
+  <circle cx="64" cy="72.32" r="2.3" fill="#FFFFFF"/>
+</svg>
